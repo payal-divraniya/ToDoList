@@ -9,7 +9,8 @@ const App = () => {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(""); // ✅ for toast
+  const [message, setMessage] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
 
   // ✅ Load tasks
   useEffect(() => {
@@ -28,7 +29,18 @@ const App = () => {
     if (savedUser) setUser(savedUser);
   }, []);
 
-  // ✅ Show message function
+  // ✅ Load dark mode
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode");
+    if (savedMode === "true") setDarkMode(true);
+  }, []);
+
+  // ✅ Save dark mode
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
+
+  // ✅ Toast message
   const showMessage = (msg) => {
     setMessage(msg);
     setTimeout(() => setMessage(""), 2000);
@@ -43,7 +55,7 @@ const App = () => {
     }, 1000);
   };
 
-  // Add task
+  // ✅ Add task
   const addTask = (task) => {
     const newTask = {
       ...task,
@@ -54,13 +66,13 @@ const App = () => {
     showMessage("Task added ✅");
   };
 
-  // Delete task (NO confirm popup)
+  // ✅ Delete task
   const deleteTask = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
     showMessage("Task deleted 🗑");
   };
 
-  // Toggle complete
+  // ✅ Toggle complete
   const toggleTask = (id) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -71,7 +83,7 @@ const App = () => {
     );
   };
 
-  // Edit task
+  // ✅ Edit task
   const editTask = (id, newText) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -81,7 +93,7 @@ const App = () => {
     showMessage("Task updated ✏️");
   };
 
-  // ✅ Improved Filter + Search
+  // ✅ Filter + Search
   const filteredTasks = tasks
     .filter((task) => {
       if (filter === "completed") return task.completed;
@@ -95,51 +107,68 @@ const App = () => {
     );
 
   return (
-    <div className="app">
-      <h1>Todo App 🚀</h1>
+    <div className={darkMode ? "app dark" : "app"}>
+      {/* 🌙 DARK MODE BUTTON */}
+      <button
+        className="mode-toggle"
+        onClick={() => setDarkMode(!darkMode)}
+      >
+        {darkMode ? "☀️" : "🌙"}
+      </button>
 
-      {/* ✅ Toast Message */}
-      {message && <div className="toast">{message}</div>}
+      <div className="container">
+        <h1>Todo App 🚀</h1>
 
-      {!user ? (
-        <Login setUser={setUser} />
-      ) : (
-        <>
-          <h2 className="welcome">Welcome, {user} 🎉</h2>
+        {/* ✅ Toast */}
+        {message && <div className="toast">{message}</div>}
 
-          <button onClick={handleLogout} className="logout">
-            Logout
-          </button>
+        {!user ? (
+          <Login setUser={setUser} />
+        ) : (
+          <>
+            {/* 🔥 TOP BAR */}
+            <div className="top-bar">
+              <h2 className="welcome">Welcome, {user} 🎉</h2>
+              <button onClick={handleLogout} className="logout">
+                Logout
+              </button>
+            </div>
 
-          <TodoForm addTask={addTask} />
+            {/* ADD TASK */}
+            <TodoForm addTask={addTask} />
 
-          {/* ✅ Improved Search UI */}
-          <input
-            type="text"
-            placeholder="🔍 Search tasks..."
-            className="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+            {/* SEARCH */}
+            <input
+              type="text"
+              placeholder="🔍 Search tasks..."
+              className="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
 
-          <div className="filters">
-            <button onClick={() => setFilter("all")}>All</button>
-            <button onClick={() => setFilter("completed")}>
-              Completed
-            </button>
-            <button onClick={() => setFilter("pending")}>
-              Pending
-            </button>
-          </div>
+            {/* FILTER */}
+            <div className="filters">
+              <button onClick={() => setFilter("all")}>All</button>
+              <button onClick={() => setFilter("completed")}>
+                Completed
+              </button>
+              <button onClick={() => setFilter("pending")}>
+                Pending
+              </button>
+            </div>
 
-          <TodoList
-            tasks={filteredTasks}
-            deleteTask={deleteTask}
-            toggleTask={toggleTask}
-            editTask={editTask}
-          />
-        </>
-      )}
+            {/* TASK LIST */}
+            <div className="task-container">
+              <TodoList
+                tasks={filteredTasks}
+                deleteTask={deleteTask}
+                toggleTask={toggleTask}
+                editTask={editTask}
+              />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

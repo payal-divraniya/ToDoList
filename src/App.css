@@ -1,103 +1,125 @@
-/* BACKGROUND */
-body {
+/* RESET */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* APP CARD */
+/* BODY */
+body {
+  margin: 0;
+}
+
+/* 🌞 APP BACKGROUND (LIGHT) */
 .app {
-  max-width: 650px;
-  margin: 40px auto;
-  padding: 25px;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 20px;
+}
+
+/* 🌙 DARK MODE BACKGROUND */
+.app.dark {
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: white;
+}
+
+/* MAIN CARD */
+.container {
+  width: 400px;
   background: white;
+  padding: 25px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease;
+}
+
+/* DARK CARD */
+.app.dark .container {
+  background: #2c2c3c;
 }
 
 /* TITLE */
 h1 {
   text-align: center;
-  color: #333;
-}
-
-/* LOGIN WRAPPER */
-.login-wrapper {
-  height: 60vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* LOGIN CARD */
-.login-card {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  width: 300px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.login-card h2 {
-  margin-bottom: 10px;
-}
-
-.login-card p {
-  color: gray;
-  margin-bottom: 20px;
-}
-
-.login-card input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
   margin-bottom: 15px;
 }
 
-/* LOGIN BUTTON */
-.login-card button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+/* TOP BAR */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.login-card button:hover {
+/* WELCOME */
+.welcome {
+  font-size: 16px;
+}
+
+/* LOGOUT */
+.logout {
+  background: #ff4d4d;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.logout:hover {
   transform: scale(1.05);
 }
 
-/* FORM FIX */
+/* DARK MODE BUTTON */
+.mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: white;
+}
+
+.app.dark .mode-toggle {
+  background: black;
+  color: white;
+}
+
+/* FORM */
 .form {
   display: flex;
-  align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin: 15px 0;
 }
 
 .form input {
   flex: 1;
-  padding: 12px;
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
-/* ADD BUTTON */
+.app.dark .form input {
+  background: #3a3a4f;
+  color: white;
+  border: 1px solid #555;
+}
+
 .form button {
-  padding: 12px 18px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   border: none;
+  padding: 10px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #36d1dc, #5b86e5);
   color: white;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .form button:hover {
@@ -107,28 +129,58 @@ h1 {
 /* SEARCH */
 .search {
   width: 100%;
-  padding: 12px 4px;
-  border-radius: 25px;
-  border: none;
-  outline: none;
-  background: #f1f1f1;
-  margin-bottom: 15px;
-  font-size: 14px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
 }
 
-/* FILTER BUTTONS */
+.app.dark .search {
+  background: #3a3a4f;
+  color: white;
+  border: 1px solid #555;
+}
+
+/* FILTER */
 .filters {
-  text-align: center;
-  margin-bottom: 15px;
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .filters button {
-  margin: 5px;
-  padding: 8px 14px;
+  flex: 1;
+  padding: 8px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
   background: #eee;
   cursor: pointer;
+}
+
+.filters button:hover {
+  background: #667eea;
+  color: white;
+}
+
+.app.dark .filters button {
+  background: #444;
+  color: white;
+}
+
+/* TASK LIST SCROLL */
+.task-container {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* SCROLLBAR */
+.task-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.task-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
 }
 
 /* TODO ITEM */
@@ -136,13 +188,19 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 10px;
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  animation: slideUp 0.3s ease;
 }
 
-.todo.completed h3 {
+.app.dark .todo {
+  background: #3a3a4f;
+}
+
+/* COMPLETED */
+.completed h3 {
   text-decoration: line-through;
   color: gray;
 }
@@ -151,90 +209,9 @@ h1 {
 .actions button {
   margin-left: 5px;
   border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.actions button:nth-child(1) {
-  background: green;
-  color: white;
-}
-
-.actions button:nth-child(2) {
-  background: orange;
-  color: white;
-}
-
-.actions button:nth-child(3) {
-  background: red;
-  color: white;
-}
-
-/* LOGOUT */
-.logout {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  cursor: pointer;
-}
-
-.toast {
-  background: black;
-  color: white;
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 10px;
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-
-/* TASK ANIMATION */
-.todo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  animation: fadeSlide 0.4s ease;
-  transition: 0.3s;
-}
-
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.todo:hover {
-  transform: scale(1.02);
-}
-
-/* ACTION BUTTONS ICON STYLE */
-.actions button {
-  margin-left: 5px;
-  border: none;
-  padding: 8px;
+  padding: 6px;
   border-radius: 50%;
   cursor: pointer;
-  transition: 0.3s;
-  font-size: 14px;
 }
 
 .actions button:nth-child(1) {
@@ -256,11 +233,116 @@ h1 {
   transform: scale(1.2);
 }
 
-button {
-  transition: all 0.3s ease;
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  animation: fadeInOut 2s ease;
 }
 
-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
+/* LOGIN PAGE */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  width: 300px;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.014);
+  backdrop-filter: blur(10px);
+  color: white;
+}
+
+.app.dark .login-card {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.login-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #00c6ff;
+  color: white;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ===== FORCE TEXT VISIBILITY FIX ===== */
+
+/* LIGHT MODE TEXT */
+.app:not(.dark) .welcome {
+  color: #222 !important;
+}
+
+.app:not(.dark) .login-card {
+  background: #ffffff !important;
+  color: #222 !important;
+}
+
+.app:not(.dark) .login-card h2 {
+  color: #222 !important;
+}
+
+.app:not(.dark) .login-card p {
+  color: #555 !important;
+}
+
+/* INPUT TEXT */
+.app:not(.dark) input {
+  color: #000 !important;
+}
+
+/* DARK MODE TEXT */
+.app.dark .welcome {
+  color: #fff !important;
+}
+
+.app.dark .login-card {
+  color: #fff !important;
 }
